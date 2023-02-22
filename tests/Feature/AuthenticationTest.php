@@ -61,7 +61,7 @@ class AuthenticationTest extends TestCase
      */
     public function test_user_can_login_with_correct_credentials(){
         $requestAccountInfo = [
-            'email'     => 'admin@gmail.com',
+            'email'    => 'admin@gmail.com',
             'password' => 'admin123',
         ];
 
@@ -70,5 +70,22 @@ class AuthenticationTest extends TestCase
 
         $exptedAdminUser = auth()->user(); // in this case it was 'admin' user
         $this->assertAuthenticatedAs( $exptedAdminUser );
+    }
+
+    /**
+     * Test can not login with a non existent email.
+     * @return void
+     */
+    public function test_user_can_not_login_with_in_correct_email_credentials(){
+        $requestAccountInfo = [
+            'email'    => 'demo@gmail.com',
+            'password' => 'demo123',
+        ];
+
+        $response = $this->post('/login', $requestAccountInfo);
+        $response->assertRedirect('/');
+        $response->assertSessionHasErrors('email');
+
+        $this->assertGuest();
     }
 }
