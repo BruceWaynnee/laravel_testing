@@ -14,6 +14,7 @@
                         </div>
                     @endif
 
+                    <h2 class="text-center text-danger" style="font-weight: bolder;">Welcome To Nerv!</h2>
                     {{ __('You are logged in!') }}
                 </div>
             </div>
